@@ -1,1 +1,26 @@
 Game design doc to first go here.
+
+## Turn Loop
+Each turn follows a single, deterministic sequence:
+
+1. **Render**: Display current ship status, environment, and available actions.
+2. **Choose Action**: Player selects one primary action for the turn.
+3. **Resolve Action**: Apply outcomes of the chosen action (success/failure, resource changes, events).
+4. **Apply Passive Effects**: Process ongoing system updates (decay, drain, wear, health changes).
+5. **Update UI**: Refresh HUD/logs to reflect the new state.
+
+## Turn Granularity
+* **Discrete, action-based turns**: each player action advances time by a fixed unit (e.g., one "tick").
+* Time cost is tied to the chosen action; heavier actions may advance multiple ticks.
+* **Concurrent actions**: production systems, generators, and background jobs run as passive systems that consume/produce per tick, so multiple resource flows resolve together during the **Apply Passive Effects** step.
+* **Base tick size**: choose a smallest tick unit (e.g., 1 minute or 10 seconds) and allow actions to advance N ticks; very long actions can fast-forward by processing multiple ticks in a batch while still applying passive updates each tick.
+* **Skip/accelerate**: allow the player to advance time without a primary action (e.g., "wait 10 ticks") and optionally speed up resolution by simulating ticks in chunks while preserving per-tick ordering.
+
+## Subsystems Updated Every Loop
+* **Resource decay** (food, fuel, oxygen).
+* **Power drain** (idle systems, active modules).
+* **System wear** (durability degradation, fault accumulation).
+* **Crew health** (stress, injury recovery/decline).
+
+## Time Model
+* **Turn-based loop** with **no background tick**; time advances only when an action is taken.
