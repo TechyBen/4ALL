@@ -24,3 +24,40 @@ Each turn follows a single, deterministic sequence:
 
 ## Time Model
 * **Turn-based loop** with **no background tick**; time advances only when an action is taken.
+
+## HUD Layout
+Three-column layout with a dedicated action list:
+
+1. **Left Column (Stats/Missions)**:
+   * Ship status: hull, power, fuel.
+   * Survival stats.
+   * Current mission objectives.
+2. **Center Column (View/Description)**:
+   * Current location narrative.
+   * Recent events.
+   * Action results.
+   * Flavor text.
+3. **Right Column (Materials/Descriptions)**:
+   * Inventory with quantities.
+   * Material details.
+   * Device status.
+4. **Current Action List**:
+   * Distinct region at the bottom (or inline) for available actions.
+
+### Mock HUD Example
+```
+┌───────────────────────────┬───────────────────────────────────────────┬───────────────────────────┐
+│ STATS / MISSIONS          │ VIEW / DESCRIPTION                        │ MATERIALS / DEVICES       │
+│ Hull: 78%                 │ Location: Derelict Relay Station         │ Inventory                │
+│ Power: 42% (drain: -2/t)  │ A dim corridor flickers with old signage. │ • Scrap: 12               │
+│ Fuel: 19%                 │ Recent: Found a sealed access panel.      │ • Circuitry: 4            │
+│ Oxygen: 64%               │ Result: Panel pried open.                 │ • Medkit: 1               │
+│ Food: 33%                 │ Flavor: Dust motes drift in the beam.     │ Materials                │
+│ Mission: Restore comms    │                                           │ • Alloy Plate (x2)        │
+│ Objective: Find power tap │                                           │ Devices                  │
+│                           │                                           │ • Scanner: ONLINE         │
+│                           │                                           │ • Shield: STANDBY         │
+├───────────────────────────┴───────────────────────────────────────────┴───────────────────────────┤
+│ CURRENT ACTIONS: [Scan] [Repair] [Salvage] [Rest] [Open Log] [Wait 5]                                 │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
